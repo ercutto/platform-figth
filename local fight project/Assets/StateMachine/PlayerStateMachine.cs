@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UIElements;
 
 public class PlayerStateMachine : MonoBehaviour
 {
@@ -25,23 +26,47 @@ public class PlayerStateMachine : MonoBehaviour
     float _grondedGravity = -.05f;
 
     bool _isJumpPressed=false;
-    public bool IsJumpPressed { get { return _isJumpPressed; } }
     float _initialJumpVelocity;
     float _maxJumpHeight = 4.0f;
     float _maxJumpTime = .75f;
     bool _isJumping=false;
     int _isJumpingHash;
-    int _isJumpCountHash;
-    bool _isJumpAnimating;
+    int _jumpCountHash;
+    bool _requireNewJumpPress = false;
     int _jumpCount;
+    PlayerStateFactory _states;
+    Dictionary<int, float> _initialJumpVelocities = new Dictionary<int, float>();
+    Dictionary<int, float> _jumpGravities = new Dictionary<int, float>();
+    Coroutine _currentJumpResetCoroutine = null;
 
     //stateVariable
     PlayerBaseState _currentState;
+    //getter and setters 
     public PlayerBaseState CurrentState { get { return _currentState; }set { _currentState = value; } }
-    PlayerStateFactory _states;
-    Dictionary<int,float>_initialJumpVelocities = new Dictionary<int,float>();
-    Dictionary<int,float> _jumpGravities=new Dictionary<int,float>();
-    Coroutine _currentJumpResetCoroutine = null;
+    public Animator Animator { get { return _animator; } }
+    public Coroutine CurrentJumpResetCoroutine { get { return _currentJumpResetCoroutine; } set { _currentJumpResetCoroutine = value; } }
+    public Dictionary<int,float> InitialJumpVelocities { get {  return _initialJumpVelocities; } }
+    public Dictionary<int,float> JumpGravities { get { return _jumpGravities; } }   
+    public int JumpCount { get { return _jumpCount; } set { _jumpCount = value; } }
+    public int IsJumpingHash { get { return _isJumpingHash; } }
+    public int JumpCountHash { get { return _jumpCountHash; } }
+    public bool RequireNewJumpPress { get { return _requireNewJumpPress; } set { _requireNewJumpPress = value; } }
+    public bool IsJumping { set { _isJumping = value; } }
+    public bool IsJumpPressed { get { return _isJumpPressed; }}
+    public float CurrentMovementY { get { return _currentMovement.y; } set { _currentMovement.y = value; } }
+    public float ApliedMovementY { get { return _apliedMovement.y; } set { _apliedMovement.y = value; } }
+    public float GroundedGravity { get { return _grondedGravity; } }
+    public CharacterController CharacterController { get { return _characterController; } }
+    public bool IsMovementPressed { get { return _isMovementPressed; }}
+    public bool IsRunPressed { get { return _isRunPressed; }}
+    public int IsWalkingHash { get { return _isWalkingHash; }}
+    public int IsRunningHash { get { return _isRunningHash; }}
+    public float AppliedMovementX { get { return _apliedMovement.x; } set { _apliedMovement.x=value; } }
+    public float AppliedMovementZ { get { return (_apliedMovement.z); } set { _apliedMovement.z = value; } }
+    public float RunMultiplier { get { return _runMultiplier; } }
+    public Vector2 CurrentMovementInput { get { return _currentMovementInput; } }
+
+   
 
     void Awake()
     {
@@ -56,7 +81,7 @@ public class PlayerStateMachine : MonoBehaviour
         _isWalkingHash = Animator.StringToHash("isWalking");
         _isRunningHash = Animator.StringToHash("isRunning");
         _isJumpingHash = Animator.StringToHash("isJumping");
-        _isJumpCountHash = Animator.StringToHash("jumpcount");
+        _jumpCountHash = Animator.StringToHash("jumpcount");
 
        
         _input.PlayerInputs.move.started += OnMovementInput;
@@ -81,7 +106,7 @@ public class PlayerStateMachine : MonoBehaviour
     void Update()
     {
         HandleRotation();
-        
+        _currentState.UpdateStates();
         HandleAnimation();
         _characterController.Move(_apliedMovement*Time.deltaTime);
     }
@@ -134,6 +159,7 @@ public class PlayerStateMachine : MonoBehaviour
     void OnJump(InputAction.CallbackContext context)
     {
         _isJumpPressed=context.ReadValueAsButton();
+        _requireNewJumpPress = false;
 
     }
     void OnRunPressed(InputAction.CallbackContext context)
