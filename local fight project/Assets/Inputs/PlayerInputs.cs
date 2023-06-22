@@ -53,6 +53,33 @@ public partial class @inputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Punch"",
+                    ""type"": ""Button"",
+                    ""id"": ""0bbfffe5-099e-42bd-ad3f-47fda93b2807"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DuckWalk"",
+                    ""type"": ""Button"",
+                    ""id"": ""5fa58043-137c-48a5-9e4a-06e071fdff81"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Punch2"",
+                    ""type"": ""Button"",
+                    ""id"": ""c6b93617-1fe3-4a8e-b987-35aa570c23a2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -125,11 +152,44 @@ public partial class @inputs: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""522cf291-2bb6-4c6d-9de1-c01d08aa347b"",
-                    ""path"": ""<Keyboard>/leftAlt"",
+                    ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Run"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2a906aa4-8847-4c1d-95b7-b08ebeecab03"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Punch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5988580f-26bb-4d0c-ada9-089f10946422"",
+                    ""path"": ""<Keyboard>/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DuckWalk"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6412ffff-a34a-44b7-929f-a0e7da514ca1"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Punch2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -143,6 +203,9 @@ public partial class @inputs: IInputActionCollection2, IDisposable
         m_PlayerInputs_move = m_PlayerInputs.FindAction("move", throwIfNotFound: true);
         m_PlayerInputs_Jump = m_PlayerInputs.FindAction("Jump", throwIfNotFound: true);
         m_PlayerInputs_Run = m_PlayerInputs.FindAction("Run", throwIfNotFound: true);
+        m_PlayerInputs_Punch = m_PlayerInputs.FindAction("Punch", throwIfNotFound: true);
+        m_PlayerInputs_DuckWalk = m_PlayerInputs.FindAction("DuckWalk", throwIfNotFound: true);
+        m_PlayerInputs_Punch2 = m_PlayerInputs.FindAction("Punch2", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -207,6 +270,9 @@ public partial class @inputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerInputs_move;
     private readonly InputAction m_PlayerInputs_Jump;
     private readonly InputAction m_PlayerInputs_Run;
+    private readonly InputAction m_PlayerInputs_Punch;
+    private readonly InputAction m_PlayerInputs_DuckWalk;
+    private readonly InputAction m_PlayerInputs_Punch2;
     public struct PlayerInputsActions
     {
         private @inputs m_Wrapper;
@@ -214,6 +280,9 @@ public partial class @inputs: IInputActionCollection2, IDisposable
         public InputAction @move => m_Wrapper.m_PlayerInputs_move;
         public InputAction @Jump => m_Wrapper.m_PlayerInputs_Jump;
         public InputAction @Run => m_Wrapper.m_PlayerInputs_Run;
+        public InputAction @Punch => m_Wrapper.m_PlayerInputs_Punch;
+        public InputAction @DuckWalk => m_Wrapper.m_PlayerInputs_DuckWalk;
+        public InputAction @Punch2 => m_Wrapper.m_PlayerInputs_Punch2;
         public InputActionMap Get() { return m_Wrapper.m_PlayerInputs; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -232,6 +301,15 @@ public partial class @inputs: IInputActionCollection2, IDisposable
             @Run.started += instance.OnRun;
             @Run.performed += instance.OnRun;
             @Run.canceled += instance.OnRun;
+            @Punch.started += instance.OnPunch;
+            @Punch.performed += instance.OnPunch;
+            @Punch.canceled += instance.OnPunch;
+            @DuckWalk.started += instance.OnDuckWalk;
+            @DuckWalk.performed += instance.OnDuckWalk;
+            @DuckWalk.canceled += instance.OnDuckWalk;
+            @Punch2.started += instance.OnPunch2;
+            @Punch2.performed += instance.OnPunch2;
+            @Punch2.canceled += instance.OnPunch2;
         }
 
         private void UnregisterCallbacks(IPlayerInputsActions instance)
@@ -245,6 +323,15 @@ public partial class @inputs: IInputActionCollection2, IDisposable
             @Run.started -= instance.OnRun;
             @Run.performed -= instance.OnRun;
             @Run.canceled -= instance.OnRun;
+            @Punch.started -= instance.OnPunch;
+            @Punch.performed -= instance.OnPunch;
+            @Punch.canceled -= instance.OnPunch;
+            @DuckWalk.started -= instance.OnDuckWalk;
+            @DuckWalk.performed -= instance.OnDuckWalk;
+            @DuckWalk.canceled -= instance.OnDuckWalk;
+            @Punch2.started -= instance.OnPunch2;
+            @Punch2.performed -= instance.OnPunch2;
+            @Punch2.canceled -= instance.OnPunch2;
         }
 
         public void RemoveCallbacks(IPlayerInputsActions instance)
@@ -267,5 +354,8 @@ public partial class @inputs: IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnRun(InputAction.CallbackContext context);
+        void OnPunch(InputAction.CallbackContext context);
+        void OnDuckWalk(InputAction.CallbackContext context);
+        void OnPunch2(InputAction.CallbackContext context);
     }
 }

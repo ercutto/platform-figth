@@ -31,6 +31,33 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Punch",
+                    "type": "Button",
+                    "id": "0bbfffe5-099e-42bd-ad3f-47fda93b2807",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "DuckWalk",
+                    "type": "Button",
+                    "id": "5fa58043-137c-48a5-9e4a-06e071fdff81",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Punch2",
+                    "type": "Button",
+                    "id": "c6b93617-1fe3-4a8e-b987-35aa570c23a2",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -103,11 +130,44 @@
                 {
                     "name": "",
                     "id": "522cf291-2bb6-4c6d-9de1-c01d08aa347b",
-                    "path": "<Keyboard>/leftAlt",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Run",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2a906aa4-8847-4c1d-95b7-b08ebeecab03",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Punch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5988580f-26bb-4d0c-ada9-089f10946422",
+                    "path": "<Keyboard>/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DuckWalk",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6412ffff-a34a-44b7-929f-a0e7da514ca1",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Punch2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
