@@ -10,7 +10,7 @@ public class Moving : BaseState
     private float _walkSpeedMultiplier = 1.5f;
     private int _punch = 15;
     private int _punch2 = 14;
-    private int _glock = 27;
+    //private int _glock = 27;
     private string _arms = "arms";
     private string _legs = "legs";
     public Moving(MovementSM stateMachine) : base("Moving", stateMachine)

@@ -8,26 +8,26 @@ public class  Attack : EnemyBase
 {
     protected EnemyAI ai;
     protected NavMeshAgent agent;
-    float speed = 1;
-    public Transform player;
-    public Vector3 offset = new Vector3(0, 1, 0);
-    float count= 0;
-    int fightMode = 1;
-    bool rotating=false;
-   
     
+    public Transform player;
+    private Vector3 offset = new Vector3(0, 1, 0);
+    float count= 0;
+    float speed;
+   
+
 
     public Attack(EnemyAI enemyStateMachine) : base("Attack", enemyStateMachine)
     { 
         ai = enemyStateMachine;
         agent = enemyStateMachine._agent;
         player= enemyStateMachine._player;
+        speed = enemyStateMachine._speed;
     }
     // Start is called before the first frame update
     public override void Enter()
     {
         base.Enter();
-
+       
         AttackToPlayer();
 
     }
@@ -53,20 +53,8 @@ public class  Attack : EnemyBase
         
         agent.transform.rotation=Quaternion.Slerp(agent.transform.rotation, Quaternion.LookRotation(lookPos),Time.deltaTime*5f);
 
-        agent.speed = 1;
+        agent.speed = speed;
 
-
-        //if (agent.transform.forward!=lookPos)
-        //{
-        //    rotating = true;
-        //    ai.transform.forward = lookPos;
-
-        //}
-        //else
-        //{
-        //    rotating=false;
-        //}
-        
 
         count += Time.deltaTime;
         
@@ -114,18 +102,21 @@ public class  Attack : EnemyBase
     }
     void Ducking()
     {
-
+        ai.attackType = "defense";
         ai._enemyAnimator.SetInteger("arms", 36);
+       
     }
     void Punchcing()
     {
+        ai.attackType = "RightPunch";
         ai._enemyAnimator.SetInteger("arms", 15);
     }
     void LeftPunch()
     {
+        ai.attackType = "LeftPunch";
         ai._enemyAnimator.SetInteger("arms", 14);
     }
+
     
-   
- 
+
 }

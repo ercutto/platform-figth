@@ -9,7 +9,7 @@ public class Run : BaseState
     private int _currentAnim = 2;
     private int _punch = 15;
     private int _punch2 = 15;
-    private int _glock = 27;
+    //private int _glock = 27;
     private float _runSpeedMultiplier = 3f;
     private string _arms = "arms";
     private string _legs = "legs";

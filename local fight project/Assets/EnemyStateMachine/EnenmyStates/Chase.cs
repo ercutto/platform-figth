@@ -7,7 +7,7 @@ public class Chase : EnemyBase
 {
     protected EnemyAI ai;
     protected NavMeshAgent agent;
-    float speed = 1;
+    float speed;
     public Transform player;
     
 
@@ -15,6 +15,7 @@ public class Chase : EnemyBase
         ai = enemyStateMachine;
         agent = enemyStateMachine._agent;
         player= enemyStateMachine._player;
+        speed = enemyStateMachine._speed;
     }
     // Start is called before the first frame update
     public override void Enter()
