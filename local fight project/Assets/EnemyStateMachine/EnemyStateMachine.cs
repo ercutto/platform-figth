@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Device;
@@ -14,11 +15,14 @@ public class EnemyStateMachine : MonoBehaviour
     EnemyBase _currentEnemyState;
     [HideInInspector]
     public int random;
+    [HideInInspector]
+    public int randomTwo;
     [HideInInspector] 
     public string attackType = "no attack";
     [HideInInspector]
     public string aimingto = "no aim";
-
+    [HideInInspector]
+    public bool _isTaken=false;
 
     void Start()
     {
@@ -66,11 +70,16 @@ public class EnemyStateMachine : MonoBehaviour
         GUILayout.EndArea();
 
     }
-   
-    public void RandomNum(int a,int b)
-    {
-        random = Random.Range(a,b);
-    }
 
+
+    public void RandomNum(int a, int b)
+    {
+        random = Random.Range(a, b);
+    }
+    public void RandomTow(int a, int b)
+    {
+        randomTwo = Random.Range(a, b);
+    }
    
+
 }

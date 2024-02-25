@@ -21,7 +21,7 @@ public class Idle : BaseState
     {
         base.Enter();
         msm._anim.SetInteger(_arms,_currentAnim);
-        msm._anim.SetInteger(_legs,_currentAnim); ;
+        msm._anim.SetInteger(_legs,_currentAnim); 
 
 
 

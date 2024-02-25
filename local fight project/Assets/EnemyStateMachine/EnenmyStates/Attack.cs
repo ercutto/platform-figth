@@ -14,6 +14,7 @@ public class  Attack : EnemyBase
     float count= 0;
     float speed;
    
+   
 
 
     public Attack(EnemyAI enemyStateMachine) : base("Attack", enemyStateMachine)
